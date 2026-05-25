@@ -1,16 +1,17 @@
 // pages/Dashboard.jsx
 import axios from "axios";
-import Sidebar from "../components/dashboard/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import StatsCard from "../components/dashboard/StatsCard";
-import ProjectCard from "../components/dashboard/ProjectCard";
+import ProjectCard from "../components/ProjectPage/ProjectCard";
 
-import { projects } from "../data/projects";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useProject } from "../hooks/useProject";
+import CreateProject from "../components/dashboard/CreateProject";
 
 const Dashboard = () => {
     const hour = new Date().getHours();
-
+    const [isProjectFormOpen, setIsProjectFormOpen] = useState(false);
     const greeting =
         hour < 12
             ? "Good Morning"
@@ -18,16 +19,11 @@ const Dashboard = () => {
             ? "Good Afternoon"
             : "Good Evening";
 
-    const [fetchProjects, setFetchProjects] = useState([]);
-    console.log(fetchProjects);
+    const {projects, fetchAllProj} = useProject();
 
-    let fetchAllProjects = async () =>{
-        let res = await axios.get("http://localhost:5500/api/projects");
-        setAllProjects(res.data);
-    }
-
-    use
-
+    useEffect(()=>{
+        fetchAllProj();
+    }, [])
     return (
             <div className="flex-1">
                 <Topbar
@@ -35,29 +31,38 @@ const Dashboard = () => {
                     subtitle="Manage all your projects and teams"
                 />
 
-                <div className="p-8">
+                <div className="p-8 relative">
                     <StatsCard />
-
+                    {isProjectFormOpen && (
+                        <CreateProject closeForm={setIsProjectFormOpen}/>
+                    )}
                     <div className="mt-10">
                         <div className="flex items-center justify-between mb-6">
                             <h1 className="text-3xl font-black">
                                 Your Projects
                             </h1>
 
-                            <button 
-                            onClick={}
+                            <button
+                            onClick={()=> setIsProjectFormOpen(true)}
                             className="bg-black text-white px-6 py-3 rounded-2xl">
                                 + Create Project
                             </button>
                         </div>
 
                         <div className="grid grid-cols-3 gap-6">
-                            {projects.map((project) => (
-                                <ProjectCard
-                                    key={project.id}
-                                    project={project}
-                                />
-                            ))}
+                            {
+                            projects.length > 0 ? 
+                                projects.map((project) => (
+                                    <ProjectCard
+                                        key={project.id}
+                                        project={project}
+                                    />
+                                ))
+
+                                :
+
+                                (<div>No projects to show.</div>)
+                            }
                         </div>
                     </div>
                 </div>

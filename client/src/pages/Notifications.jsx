@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/dashboard/Sidebar'
+import Sidebar from '../components/sidebar/Sidebar'
 
 const Notifications = () => {
   return (

@@ -1,8 +1,8 @@
 // components/dashboard/StatsCards.jsx
-
-import { projects } from "../../data/projects";
+import { useProject } from "../../hooks/useProject";
 
 const StatsCards = () => {
+    const {projects} = useProject();
     return (
         <div className="grid grid-cols-4 gap-5">
             <div className="bg-black text-white rounded-3xl p-6">
@@ -21,7 +21,7 @@ const StatsCards = () => {
                 </p>
 
                 <h1 className="text-5xl font-black mt-4">
-                    12
+                    0
                 </h1>
             </div>
 
@@ -31,7 +31,7 @@ const StatsCards = () => {
                 </p>
 
                 <h1 className="text-5xl font-black mt-4">
-                    31
+                    0
                 </h1>
             </div>
 
@@ -41,7 +41,7 @@ const StatsCards = () => {
                 </p>
 
                 <h1 className="text-5xl font-black mt-4">
-                    18
+                    0
                 </h1>
             </div>
         </div>

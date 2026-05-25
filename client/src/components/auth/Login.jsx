@@ -3,10 +3,13 @@ import { FcGoogle } from "react-icons/fc";
 import {useNavigate} from "react-router";
 import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const Login = () => {
     const navigate = useNavigate();
+    const {loginUser} = useContext(AuthContext);
     const {
         register,
         reset,
@@ -17,9 +20,9 @@ const Login = () => {
     })
 
     const handleFormSubmit = (data)=>{
-        console.log(data);
-        toast.success("Login successful!");
+        loginUser(data);
         reset();
+        navigate("/dashboard");
     };
     return (
         <div className="min-h-screen bg-[#d9d9d9] flex items-center justify-center px-4">

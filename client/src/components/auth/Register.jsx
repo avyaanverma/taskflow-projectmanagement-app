@@ -3,10 +3,14 @@ import { FcGoogle } from "react-icons/fc";
 import {useNavigate} from "react-router";
 import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const Register = () => {
     const navigate = useNavigate();
-
+    const {registerUser} = useContext(AuthContext);
+    
     const {
 
             register,
@@ -21,9 +25,9 @@ const Register = () => {
 
     const handleFormSubmit = (data)=>
     {
-        console.log(data);
-        toast.success("Registration successful!");
+        registerUser(data);
         reset();
+        navigate("/dashboard");
     }
 
     return (

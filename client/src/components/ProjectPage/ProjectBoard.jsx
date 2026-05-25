@@ -1,23 +1,29 @@
 // components/dashboard/ProjectBoard.jsx
 
+import { useParams } from "react-router";
 import TaskColumn from "./TaskColumn";
+import { useState } from "react";
+import axios from "axios";
 
-const ProjectBoard = ({ project }) => {
+const ProjectBoard = ({project}) => {
+    const {id} = useParams();
+    console.log(project)
+    const tasks = project.tasks;
     return (
-        <div className="grid grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-3 gap-4 mt-2">
             <TaskColumn
                 title="To Do"
-                tasks={project.tasks.todo}
+                tasks={[]}
             />
 
             <TaskColumn
                 title="In Progress"
-                tasks={project.tasks.progress}
+                tasks={[]}
             />
 
             <TaskColumn
                 title="In Review"
-                tasks={project.tasks.review}
+                tasks={[]}
             />
         </div>
     );

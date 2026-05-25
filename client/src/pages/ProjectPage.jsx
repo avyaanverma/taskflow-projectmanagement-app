@@ -2,19 +2,30 @@
 
 import { useParams } from "react-router";
 
-import Sidebar from "../components/dashboard/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
-import Breadcrumbs from "../components/dashboard/Breadcrumbs";
-import ProjectBoard from "../components/dashboard/ProjectBoard";
-
-import { projects } from "../data/projects";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import ProjectBoard from "../components/ProjectPage/ProjectBoard";
+import { useProject } from "../hooks/useProject";
+import { useEffect, useState } from "react";
 
 const ProjectPage = () => {
     const { id } = useParams();
+    const {projects, fetchAllProj} = useProject();
+    
+    useEffect(()=>{
+        fetchAllProj();
+        console.log(projects);
+    }, [])
+    
+    const project = projects.find((p)=> p._id == id)
+    console.log(project)
 
-    const project = projects.find(
-        (p) => p.id === Number(id)
-    );
+    if(!project){
+        return <div>Loading....</div>
+    }
+
+
 
     return (
             <div className="flex-1">
@@ -42,6 +53,10 @@ const ProjectPage = () => {
                         </button>
                     </div>
 
+                    <div className="mt-6 flex justify-end align-end text-xs text-gray-500 dark:text-slate-400">
+                        <span  className="">🗑️ Delete Project →</span>
+                    </div>
+                    
                     <ProjectBoard project={project} />
                 </div>
             </div>

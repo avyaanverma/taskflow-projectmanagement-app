@@ -5,8 +5,6 @@ import {
     useLocation,
 } from "react-router";
 
-import { projects } from "../../data/projects";
-
 import {
     LayoutDashboard,
     FolderKanban,
@@ -18,24 +16,27 @@ import {
     PanelLeftOpen,
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import { useProject } from "../../hooks/useProject";
+import { useEffect } from "react";
 
 const Sidebar = () => {
 
     const navigate = useNavigate();
-
     const location = useLocation();
 
     const [collapsed, setCollapsed] =
         useState(false);
 
     const { theme, toggleTheme } = useTheme();
+    const {projects} = useProject();
+
 
     return (
         <div
             className={`
                 ${
                     collapsed
-                        ? "w-[90px]"
+                        ? "w-22.5"
                         : "w-[320px]"
                 }
 
@@ -44,7 +45,7 @@ const Sidebar = () => {
                 border-gray-200 dark:border-slate-800
                 flex
                 flex-col
-                h-screen
+                min-h-screen
                 transition-all
                 duration-300
             `}
@@ -264,7 +265,7 @@ const Sidebar = () => {
 
                             onClick={() =>
                                 navigate(
-                                    `/dashboard/project/${project.id}`
+                                    `/dashboard/project/${project._id}`
                                 )
                             }
 
@@ -282,7 +283,7 @@ const Sidebar = () => {
 
                                 ${
                                     location.pathname ===
-                                    `/dashboard/project/${project.id}`
+                                    `/dashboard/project/${project._id}`
 
                                         ? "bg-black text-white"
 
@@ -309,7 +310,7 @@ const Sidebar = () => {
 
                                             ${
                                                 location.pathname ===
-                                                `/dashboard/project/${project.id}`
+                                                `/dashboard/project/${project._id}`
 
                                                     ? "text-gray-300"
 
