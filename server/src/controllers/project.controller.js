@@ -10,7 +10,7 @@ const getProjects = async (req, res)=>{
 }
 
 const getSingleProject = ()=>{
-
+    
 };
 
 const createProject = async (req, res)=>{
@@ -24,7 +24,7 @@ const createProject = async (req, res)=>{
     res.status(200).json({
         message: "Project created successfully",
         project: project
-    })
+    });
 
 }
 const updateProject = ()=>{
@@ -43,7 +43,7 @@ const deleteProject = async (req, res)=>{
     await projectModel.findByIdAndDelete(id);
 
     res.status(200).json({
-        message: "Project deleted successfully"
+        message: "Project deleted successfully",
     })
 }
 
