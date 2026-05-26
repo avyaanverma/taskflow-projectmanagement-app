@@ -8,35 +8,56 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children})=>{
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchUser = async ()=>{
         try{
             const newUser = await getMe();
             setUser(newUser);
         } catch(error){
-            setUser(null)
+            console.log(error);
+            toast.error("Something Went Wrong", {
+                position: "bottom-right"
+            });
+            setUser(null);
         } finally{
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 
     const loginUser = async (data)=>{
-        const user = await loginUserAuth(data);
-        toast.success("Login successful!");
-        setUser(user);
-        setLoading(false);
+        try {
+            const user = await loginUserAuth(data);
+            toast.success("Login successful!");
+            setUser(user);
+            return true;
+        } catch (error) {
+            console.log(error);
+            toast.error("Something Went Wrong", {
+                position: "bottom-right"
+            });
+            return "error";
+        } finally {
+            setIsLoading(false);
+        }
 
     }
     const registerUser = async (data)=>{
-        const registeredUser = await registerUserAuth(data);
-        setUser(registeredUser);
-        toast.success("Registration successful.");
-        setLoading(false);
+       try {
+            const registeredUser = await registerUserAuth(data);
+            setUser(registeredUser);
+            toast.success("Registration successful.");
+       } catch (error) {
+            console.log(error);
+            toast.error("Something Went Wrong", {
+                position: "bottom-right"
+            });
+       } finally{
+            setIsLoading(false);
+       }
     }
 
-    return <AuthContext.Provider value={{user, fetchUser, loginUser, registerUser, loading}}>
+    return <AuthContext.Provider value={{user, fetchUser, loginUser, registerUser, isLoading}}>
         {children}
     </AuthContext.Provider>
 }

@@ -5,12 +5,15 @@ import Topbar from "../components/dashboard/Topbar";
 import StatsCard from "../components/dashboard/StatsCard";
 import ProjectCard from "../components/ProjectPage/ProjectCard";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useProject } from "../hooks/useProject";
 import CreateProject from "../components/dashboard/CreateProject";
+import { AuthContext } from "../context/AuthContext";
 
 const Dashboard = () => {
     const hour = new Date().getHours();
+    const {user} = useContext(AuthContext);
+    console.log(user);
     const [isProjectFormOpen, setIsProjectFormOpen] = useState(false);
     const greeting =
         hour < 12
@@ -27,7 +30,7 @@ const Dashboard = () => {
     return (
             <div className="flex-1">
                 <Topbar
-                    title={`${greeting}, Avyaan 👋`}
+                    title={`${greeting}, ${user.name} 👋`}
                     subtitle="Manage all your projects and teams"
                 />
 

@@ -1,7 +1,9 @@
 const projectModel = require("../models/project.model");
 
 const getProjects = async (req, res)=>{
-    const projects = await projectModel.find({});
+    console.log(req);
+    
+    const projects = await projectModel.find();
 
     return res.status(200).json({
         message: "Projects fetched successfully",
@@ -14,11 +16,19 @@ const getSingleProject = ()=>{
 };
 
 const createProject = async (req, res)=>{
-    const {name, description} = req.body;
-
+    // the user who created the project will be admin
+    // also we will check if admin added any members and we will add it to members list;
+    const {user, name, description} = req.body;
+    const {id} = user.id;
     const project = await projectModel.create({
         name: name,
         description: description,
+        member: [
+            {
+                user: id,
+                role: "admin"
+            }
+        ]
     });
 
     res.status(200).json({

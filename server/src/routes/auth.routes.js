@@ -7,6 +7,6 @@ authRouter.post("/register", registerUser)
 
 authRouter.post("/login", loginUser)
 
-authRouter.post('/me', getMe);
+authRouter.get('/me', getMe);
 
 module.exports = authRouter;

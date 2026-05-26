@@ -7,13 +7,14 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 const AppLayout = () => {
-    const {user, fetchUser, loading} = useContext(AuthContext);
-
+    const {user, fetchUser, isLoading} = useContext(AuthContext);
     const navigate = useNavigate();
+
     useEffect(()=>{
         fetchUser();
-    }, [])
-    if(loading){
+    }, []);
+
+    if(isLoading){
         return <div>Loading......</div>
     }
     if(!user){

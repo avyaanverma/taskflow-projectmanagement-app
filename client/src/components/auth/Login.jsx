@@ -2,7 +2,6 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import {useNavigate} from "react-router";
 import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -19,10 +18,14 @@ const Login = () => {
         mode: "onChange",
     })
 
-    const handleFormSubmit = (data)=>{
-        loginUser(data);
-        reset();
-        navigate("/dashboard");
+    const handleFormSubmit = async (data)=>{
+        const status = await loginUser(data);
+        console.log(status);
+        
+        if (status) {
+            reset();
+            navigate("/dashboard");
+        }
     };
     return (
         <div className="min-h-screen bg-[#d9d9d9] flex items-center justify-center px-4">
